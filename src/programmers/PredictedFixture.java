@@ -7,7 +7,7 @@ package programmers;
 //n : 참가자 수 , a : 참가자 번호 , b : 경쟁자 번호
 //a와 b가 언제 만나는지?
 //붙기 전 각자 전승
-//n : 2^n (부전승 발생 X) => 결승 / 4강 / 8강 / 16강 / 32강 ... 양 사이드의 팀들은 무조건 2^n-1
+//n : 2^n (부전승 발생 X) => 결승 / 4강 / 8강 / 16강 / 32강 ... 양 사이드의 팀들은 무조건 2^n - 1
 //a와 b가 각각 1과 2가 될 때 <-- 합이 3.
 //목표 : 둘이 몇번째 라운드에 만나는가
 
@@ -28,7 +28,7 @@ public class PredictedFixture {
         }
         return answer;
     }
-    //올림을 쓴 이유 : 다음 라운드에서으 순번을 위해
+    //올림을 쓴 이유 : 다음 라운드에서의 순번을 위해
     public static int solution2(int n, int a, int b){
         int answer = 0;
         int temp;
