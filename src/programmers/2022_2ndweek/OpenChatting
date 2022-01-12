@@ -1,0 +1,98 @@
+/*
+* 모든 유저는 유저아이디로 구분
+* 입장시, "Enter 유저아이디 닉네임" ex) "Enter uid1234 Muzi"
+* 닉네임 변경시 -> ex) Change uid1234 Muzi
+* 퇴장시, "Leave 유저아이디 닉네임" ex) "Leave uid1234 Muzi"
+* 단어의 시작은 Enter Change Leave
+* 구분 : 공백
+*
+*
+* */
+
+package programmers;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class OpenChatting {
+    public static void main(String[] args){
+        String[] record = new String[5];
+        record[0] = "Enter uid1234 Muzi";
+        record[1] = "Enter uid4567 Prodo";
+        record[2] = "Leave uid1234";
+        record[3] = "Enter uid1234 Prodo";
+        record[4] = "Change uid4567 Ryan";
+        for (int i = 0 ; i < solution1(record).length ;i++){
+            System.out.println(solution1(record)[i]);
+        }
+
+        System.out.println("=======");
+        for (int i = 0 ; i < solution2(record).length ;i++){
+            System.out.println("!!"+solution2(record)[i]);
+        }
+
+    }
+    public static String[] solution2(String[] record){
+        HashMap<String, String> map = new HashMap<>();
+        ArrayList<String> arrayList = new ArrayList<>();
+        for(int i = 0 ; i < record.length ; i++){
+            String[] temp = record[i].split(" ");
+            if(record[i].charAt(0) != 'L'){
+                map.put(temp[1], temp[2]);
+            }
+        }
+        for(int i = 0 ; i < record.length ; i++){
+            String[] temp = record[i].split(" ");
+            if(record[i].charAt(0) == 'E'){
+                arrayList.add(map.get(temp[1]) + "님이 들어왔습니다.");
+            } else if(record[i].charAt(0) == 'L'){
+                arrayList.add(map.get(temp[1]) + "님이 나갔습니다.");
+            }
+        }
+        String[] answer = new String[arrayList.size()];
+        for (int i = 0 ; i < arrayList.size() ; i++){
+            answer[i] = arrayList.get(i);
+        }
+        return answer;
+    }
+    public static String[] solution1(String[] record){
+        int answerSize = record.length;
+        Map<String, String> user = new HashMap<>();
+        for(int i = 0 ; i < record.length ; i++){
+            if(record[i].charAt(0)=='C'){
+                answerSize--;
+            }
+        }
+        String[] answer = new String[answerSize];
+        for(int i = 0 ; i < record.length ; i++){
+            String[] temp = record[i].split(" ");
+            String action = temp[0];
+            String uid = temp[1];
+            switch (action){
+                case "Enter":
+                    user.put(uid, temp[2]);
+                    break;
+                case "Change":
+                    user.replace(uid, temp[2]);
+                    break;
+                default:
+                    break;
+            }
+        }
+        int flag = 0;
+        for (int i = 0 ; i < record.length ; i++){
+            String[] temp = record[i].split(" ");
+            String action = temp[0];
+            if(action.equals("Enter")){
+//                System.out.println(user.get(temp[1]) + "님이 들어왔습니다.");
+                answer[flag]=user.get(temp[1]) + "님이 들어왔습니다.";
+            }else if(action.equals("Leave")){
+//                System.out.println(user.get(temp[1]) +  "님이 나갔습니다.");
+                answer[flag]=user.get(temp[1]) +  "님이 나갔습니다.";
+            }
+            flag++;
+        }
+        return answer;
+    }
+}
